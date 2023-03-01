@@ -4,6 +4,8 @@
 Perform classification on a dataset of social network ads,
 determine whether a person will purchase an item through an ad shown on a social media app.
 
+Pruning is then applied to ensure no overfitting for the decision tree.
+
 ###### Requirements:
 
     pip install -r requirements.txt
@@ -14,7 +16,11 @@ determine whether a person will purchase an item through an ad shown on a social
 
 ###### Example of a decision tree
 
-![Example of a decision tree](/src/DecisionTree.png)
+![Example of a decision tree](/src/Decision_Tree.png)
+
+###### Example of a pruned decision tree
+
+![Example of a pruned decision tree](/src/Pruned_Decision_Tree.png)
 
 
 To display a decision tree using *DecisionTree.py* ensure Graphviz is installed on you're system
