@@ -4,11 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from sklearn.metrics import accuracy_score
 from sklearn import preprocessing
-from sklearn import metrics
-from sklearn import tree
+
+
 
 import graphviz
 import os
@@ -37,7 +37,7 @@ def plot_data(data, featureX, featureY):
 
 def plot_tree(model, X_train, y_train, title):
         
-    dot_data = tree.export_graphviz(model, out_file=None, 
+    dot_data = export_graphviz(model, out_file=None, 
                                 feature_names=X_train.columns.values[:4],  
                                 class_names=y_train.columns.values[0],
                                 filled=True)
@@ -87,27 +87,30 @@ def train_decision_tree(X_train, y_train, X_test, y_test):
 
 def train_decision_tree_with_pruning(X_train, y_train, X_test, y_test):
     
-    TempModel = DecisionTreeClassifier(random_state=0)
+    #Determine the optimal alpha value for pruning
     
-    path = TempModel.cost_complexity_pruning_path(X_train, y_train)
-    ccp_alphas = path.ccp_alphas
     
-    models = []
-    for ccp_alpha in ccp_alphas:
-        clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)
-        clf.fit(X_train, y_train)
-        models.append(clf)
+    #TempModel = DecisionTreeClassifier(random_state=0)
+    
+    #path = TempModel.cost_complexity_pruning_path(X_train, y_train)
+    #ccp_alphas = path.ccp_alphas
+    
+    #models = []
+    #for ccp_alpha in ccp_alphas:
+        #clf = DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)
+        #clf.fit(X_train, y_train)
+        #models.append(clf)
         
-    models = models[:-1]
-    ccp_alphas = ccp_alphas[:-1]
+    #models = models[:-1]
+    #ccp_alphas = ccp_alphas[:-1]
      
-    train_acc = []
-    test_acc = []
-    for c in models:
-        y_train_pred = c.predict(X_train)
-        y_test_pred = c.predict(X_test)
-        train_acc.append(accuracy_score(y_train_pred,y_train))
-        test_acc.append(accuracy_score(y_test_pred,y_test))
+    #train_acc = []
+    #test_acc = []
+    #for c in models:
+        #y_train_pred = c.predict(X_train)
+        #y_test_pred = c.predict(X_test)
+        #train_acc.append(accuracy_score(y_train_pred,y_train))
+        #test_acc.append(accuracy_score(y_test_pred,y_test))
     
     #Plot the accuracy vs alpha
     #From this plot an alpha of 0.006 is chosen
@@ -121,7 +124,7 @@ def train_decision_tree_with_pruning(X_train, y_train, X_test, y_test):
     #plt.show()
     
     
-    clf_ = tree.DecisionTreeClassifier(random_state=0,ccp_alpha=0.006)
+    clf_ = DecisionTreeClassifier(random_state=0,ccp_alpha=0.006)
     clf_.fit(X_train,y_train)
     y_train_pred = clf_.predict(X_train)
     y_test_pred = clf_.predict(X_test)
